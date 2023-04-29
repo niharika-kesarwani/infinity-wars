@@ -8,7 +8,7 @@
     "faker": "5.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-scripts": "4.0.0"
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "typescript": "4.1.3"
