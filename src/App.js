@@ -18,29 +18,57 @@ const data = [...Array(50)].map((item) => ({
   offer: faker.random.arrayElement([
     "Save 50",
     "70% bonanza",
-    "Republic Day Sale"
+    "Republic Day Sale",
   ]),
   idealFor: faker.random.arrayElement([
     "Men",
     "Women",
     "Girl",
     "Boy",
-    "Senior"
+    "Senior",
   ]),
   level: faker.random.arrayElement([
     "beginner",
     "amateur",
     "intermediate",
     "advanced",
-    "professional"
+    "professional",
   ]),
-  color: faker.commerce.color()
+  color: faker.commerce.color(),
 }));
 
 export default function App() {
   return (
-    <>
-      <div className="App" style={{ display: "flex", flexWrap: "wrap" }}>
+    <div className="App">
+      <div className="searchInput">
+        <label>
+          Search: <input placeholder="Search By Name" />
+        </label>
+        <button>Search Data</button>
+      </div>
+      <fieldset className="radioInput">
+        <legend>Sort By</legend>
+        <label>
+          <input type="radio" name="radio" />
+          Price - High to Low
+        </label>
+        <label>
+          <input type="radio" name="radio" />
+          Price - Low to High
+        </label>
+      </fieldset>
+      <fieldset className="checkBoxInput">
+        <legend>Filters</legend>
+        <label>
+          <input type="checkbox" />
+          Include Out of Stock
+        </label>
+        <label>
+          <input type="checkbox" />
+          Fast Delivery Only
+        </label>
+      </fieldset>
+      <div className="products">
         {data.map(
           ({
             id,
@@ -50,19 +78,10 @@ export default function App() {
             productName,
             inStock,
             level,
-            fastDelivery
+            fastDelivery,
           }) => (
-            <div
-              key={id}
-              style={{
-                border: "1px solid #4B5563",
-                borderRadius: "0 0 0.5rem 0.5rem",
-                margin: "1rem",
-                maxWidth: "40%",
-                padding: "0 0 1rem"
-              }}
-            >
-              <img src={image} width="100%" height="auto" alt={productName} />
+            <div key={id} className="product">
+              <img src={image} alt={productName} />
               <h3> {name} </h3>
               <div>Rs. {price}</div>
               {inStock && <div> In Stock </div>}
@@ -77,6 +96,6 @@ export default function App() {
           )
         )}
       </div>
-    </>
+    </div>
   );
 }
