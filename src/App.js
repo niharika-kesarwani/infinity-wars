@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
 
 import faker from "faker";
+import { useProduct } from "./index";
 
 faker.seed(123);
 
@@ -37,39 +38,70 @@ const data = [...Array(50)].map((item) => ({
   color: faker.commerce.color(),
 }));
 
+export { data };
+
 export default function App() {
+  const { setAllFilters, checkboxFilteredProducts } = useProduct();
+  const [inputText, setInputText] = useState("");
+
   return (
     <div className="App">
       <div className="searchInput">
         <label>
-          Search: <input placeholder="Search By Name" />
+          Search:{" "}
+          <input
+            placeholder="Search By Name"
+            onChange={(e) => setInputText(e.target.value)}
+          />
         </label>
-        <button>Search Data</button>
+        <button
+          onClick={() => setAllFilters({ type: "SEARCH", value: inputText })}
+        >
+          Search Data
+        </button>
       </div>
       <fieldset className="radioInput">
         <legend>Sort By</legend>
         <label>
-          <input type="radio" name="radio" />
+          <input
+            type="radio"
+            name="radio"
+            onChange={(e) => setAllFilters({ type: "SORT", value: "HTL" })}
+          />
           Price - High to Low
         </label>
         <label>
-          <input type="radio" name="radio" />
+          <input
+            type="radio"
+            name="radio"
+            onChange={(e) => setAllFilters({ type: "SORT", value: "LTH" })}
+          />
           Price - Low to High
         </label>
       </fieldset>
       <fieldset className="checkBoxInput">
         <legend>Filters</legend>
         <label>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            onChange={() =>
+              setAllFilters({ type: "FILTERS", value: "inStock" })
+            }
+          />
           Include Out of Stock
         </label>
         <label>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            onChange={() =>
+              setAllFilters({ type: "FILTERS", value: "fastDelivery" })
+            }
+          />
           Fast Delivery Only
         </label>
       </fieldset>
       <div className="products">
-        {data.map(
+        {checkboxFilteredProducts?.map(
           ({
             id,
             name,
