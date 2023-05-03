@@ -25,7 +25,7 @@ export const ProductProvider = ({ children }) => {
   const [allFilters, setAllFilters] = useReducer(handleAllFilterReducer, {
     search: "",
     sort: null,
-    filters: [],
+    filters: ["inStock"],
   });
 
   const searchFilteredProducts =
@@ -43,19 +43,12 @@ export const ProductProvider = ({ children }) => {
       )
     : searchFilteredProducts;
 
-  const checkboxFilteredProducts = () => {
-    let filtersWithoutInStock = allFilters?.filters?.filter(
-      (filter) => filter !== "includeOutOfStock"
-    );
-    const checkboxFilteredData = radioFilteredProducts?.filter((product) =>
-      filtersWithoutInStock?.every((filter) => product[filter])
-    );
-    if (allFilters?.filters?.includes("includeOutOfStock")) {
-      return checkboxFilteredData;
-    } else {
-      return checkboxFilteredData?.filter(({ inStock }) => inStock);
-    }
-  };
+  const checkboxFilteredProducts =
+    allFilters?.filters?.length > 0
+      ? radioFilteredProducts?.filter((product) =>
+          allFilters?.filters?.every((filter) => product[filter])
+        )
+      : radioFilteredProducts;
 
   return (
     <ProductContext.Provider

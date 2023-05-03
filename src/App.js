@@ -85,7 +85,7 @@ export default function App() {
           <input
             type="checkbox"
             onChange={() =>
-              setAllFilters({ type: "FILTERS", value: "includeOutOfStock" })
+              setAllFilters({ type: "FILTERS", value: "inStock" })
             }
           />
           Include Out of Stock
@@ -101,7 +101,7 @@ export default function App() {
         </label>
       </fieldset>
       <div className="products">
-        {checkboxFilteredProducts()?.map(
+        {checkboxFilteredProducts?.map(
           ({
             id,
             name,
